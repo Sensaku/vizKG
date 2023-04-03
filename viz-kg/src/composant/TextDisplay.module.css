@@ -3,8 +3,14 @@
     padding: 5px;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    margin-top: 30px;
 }
 
-p {
+.h2-text {
+    color: grey;
+}
+
+.p-text {
     text-align: justify;
 }

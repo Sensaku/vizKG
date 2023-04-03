@@ -1,8 +1,10 @@
-section {
+.section-menu {
     display: flex;
     flex-direction: row;
     width: 100%;
     border: black thin solid;
+    padding: 10px;
+    margin-top: 30px;
 }
 
 .logo {
@@ -14,7 +16,7 @@ section {
     border-left: black thin solid;
 }
 
-ul {
+.ul-menu {
     display: flex;
     flex-direction: row;
     list-style-type: none;
@@ -22,6 +24,6 @@ ul {
     text-align: right;
 }
 
-li {
+.li-menu {
     padding: 5px;
 }
