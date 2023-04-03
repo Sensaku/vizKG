@@ -1,0 +1,10 @@
+.section-text {
+    border: black thin solid;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+p {
+    text-align: justify;
+}

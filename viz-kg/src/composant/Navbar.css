@@ -1,0 +1,27 @@
+section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border: black thin solid;
+}
+
+.logo {
+    width: 30%;
+}
+
+.menu {
+    width: 70%;
+    border-left: black thin solid;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    width: 100%;
+    text-align: right;
+}
+
+li {
+    padding: 5px;
+}
