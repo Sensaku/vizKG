@@ -1,11 +1,11 @@
 .section-text {
-    border: black thin solid;
+    border: grey thin solid;
     padding: 5px;
     display: flex;
     flex-direction: column;
     padding: 10px;
     margin-top: 30px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 3px 5px 5px grey;
     background-color: white;
     border-radius: 5px;
 }
@@ -24,5 +24,23 @@
 }
 
 .p-text {
+    display: block;
+    width: 90%;
     text-align: justify;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.p-paragraph {
+    display: black;
+    width: 10%;
+    border-right: grey thin solid;
+    margin: 0;
+    vertical-align: center;
+}
+
+.row-text-display {
+    display: flex;
+    flex-direction: row;
+    border-bottom: grey thin solid;
 }

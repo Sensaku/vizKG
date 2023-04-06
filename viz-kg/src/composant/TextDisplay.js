@@ -1,12 +1,36 @@
 import React from 'react';
 import styles from "./TextDisplay.module.css";
 
+const texts = []
+
+for (let i = 100; i < 150; i++){
+    texts.push({
+        paragraph : i,
+        text : `Texte du paragraphe ${i}.`
+    })
+}
+
+const TextRow = ({element}) => {
+    return <div className={styles['row-text-display']}>
+        <p className={styles['p-paragraph']}>{element.paragraph}</p>
+        <p className={styles['p-text']}>{element.text}</p>
+    </div>
+}
+
 const TextDisplay = () => {
+    const textRows = []
+
+    texts.forEach(element => {
+        textRows.push(<TextRow element={element} key={element.paragraph}/>)
+    })
+
     return <section className={styles['section-text']}>
         <h2 className={styles['h2-text']}>Chapter 8</h2>
-        <p className={styles['p-text']}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
+        <div className={styles['row-text-display']}>
+            <p className={styles['p-paragraph']}>Paragraph number</p>
+            <p className={styles['p-text']}>Text</p>
+        </div>
+        {textRows}
     </section>
 }
 
