@@ -25,7 +25,7 @@ SELECT DISTINCT ?paragraph ?name_animal ?mention_animal ?name_construction ?ment
     }
     ORDER BY ?paragraph
 `
-async function sparql(endpoint, query){
+async function sparqlRequest(endpoint, query){
     const url = endpoint + 
     '?query=' + encodeURIComponent(query) + 
     '&format=json';
@@ -36,44 +36,59 @@ async function sparql(endpoint, query){
 }
 
 const TextRow = ({element}) => {
-    return <div className={styles['row-text-display']}>
-        <p className={styles['p-paragraph']}>{element.paragraph}</p>
-        <p className={styles['p-text']}>{element.text}</p>
-    </div>
+    const sparqlRender = []
+
+    function eltToTable(){
+        let label = Object.keys(element)
+        label.forEach(variable => {
+            let value = element[variable].value
+            sparqlRender.push(<td className={styles["row"]}>{value}</td>)
+        })
+    }
+    eltToTable()
+
+    return <tr className={styles["row"]}>
+        {sparqlRender}
+    </tr>
 }
 
 const TextDisplay = () => {
-    let [textRows, setTextRows] = useState([]);
+    let [textRows, setTextRows] = useState([])
+    let [labelRows, setLabelRows] = useState([])
 
     useEffect(() => {
         const dataFetch = async  () => {
-            const data = await sparql(endpoint, query).then(({head, results}) => {
-                console.log(results.bindings)
+            const data = await sparqlRequest(endpoint, query).then(({head, results}) => {
                 return results.bindings
             })
-            
+
+            let resulatLabel = []
+            Object.keys(data[0]).forEach(label => {
+                resulatLabel.push(<th className={styles["row"]}>{label}</th>)
+            })
             let resultBindings = []
             data.forEach(elt => {
-                let element = {
-                    paragraph : elt.paragraph.value,
-                    text: elt.name_animal.value
-                }
-                console.log(element)
-                resultBindings.push(<TextRow element={element}/>)
+                resultBindings.push(<TextRow element={elt}/>)
             })
             setTextRows(resultBindings)
+            setLabelRows(resulatLabel)
 
         }
         dataFetch()
     }, [])
 
     return <section className={styles['section-text']}>
-        <h2 className={styles['h2-text']}>Chapter 8</h2>
-        <div className={styles['row-text-display']}>
-            <p className={styles['p-paragraph']}>Paragraph number</p>
-            <p className={styles['p-text']}>Text</p>
-        </div>
-        {textRows}
+        <table>
+            <thead>
+                <tr>
+                    {labelRows}
+                </tr>
+            </thead>
+            <tbody>
+                {textRows}
+            </tbody>   
+        </table>
+        
     </section>
 }
 
