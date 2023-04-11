@@ -8,4 +8,11 @@ const sparqlRequest = async (endpoint, query) => {
     })
 }
 
-export default sparqlRequest;
+const emptyAboutValue = (elt) => {
+    if (elt === ""){
+        return
+    }
+    return <p>{elt}</p>
+}
+
+export {sparqlRequest, emptyAboutValue};

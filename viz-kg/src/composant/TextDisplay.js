@@ -1,8 +1,60 @@
 import React, { useState, useEffect} from 'react';
 import styles from "./TextDisplay.module.css";
-import sparqlRequest from '../util_functions/utility';
-import qc1 from '../util_functions/qc_queries';
+import  { sparqlRequest, emptyAboutValue } from '../util_functions/utility';
+import qc from '../util_functions/qc_queries';
 import sparql_endpoint from '../util_functions/config';
+
+let i = 0;
+
+const QcElement = ({question}) => {
+    const reformulation = emptyAboutValue(question.about.reformulation)
+    const note = emptyAboutValue(question.about.note)
+    const sortie = emptyAboutValue(question.about.sortie)
+
+    return <details>
+        <summary className={styles["summary"]}>QC{question.number} : {question.question}</summary>
+        <h2>QC{question.number} : {question.question}</h2>
+        {reformulation}
+        {note}
+        {sortie}
+        <TableRender question={question} />
+    </details>
+}
+
+const TableRender = ({question}) => {
+    const [textRows, setTextRows] = useState([])
+    const [labelRows, setLabelRows] = useState([])
+
+    useEffect(() => {
+        const dataFetch = async () => {
+            const data = await sparqlRequest(sparql_endpoint, question.sparql).then(({head, results}) => {
+                return results.bindings
+            })
+
+            let resulatLabel = []
+            Object.keys(data[0]).forEach(label => resulatLabel.push(<th className={styles["row"]}>{label}</th>))
+
+            let resultBindings = []
+            data.forEach(elt => resultBindings.push(<TextRow element={elt}/>))
+
+            setTextRows(resultBindings)
+            setLabelRows(resulatLabel)
+
+        }
+        dataFetch()
+    }, [])
+
+    return <table>
+        <thead>
+            <tr>
+                {labelRows}
+            </tr>
+        </thead>
+        <tbody className={styles["content"]}>
+            {textRows}
+        </tbody>   
+    </table>
+}
 
 const TextRow = ({element}) => {
     const sparqlRender = []
@@ -11,7 +63,8 @@ const TextRow = ({element}) => {
         let label = Object.keys(element)
         label.forEach(variable => {
             let value = element[variable].value
-            sparqlRender.push(<td className={styles["row"]}>{value}</td>)
+            i++
+            sparqlRender.push(<td key={i++} className={styles["row"]}>{value}</td>)
         })
     }
     eltToTable()
@@ -22,43 +75,12 @@ const TextRow = ({element}) => {
 }
 
 const TextDisplay = () => {
-    let [textRows, setTextRows] = useState([])
-    let [labelRows, setLabelRows] = useState([])
-    let query = qc1
+    const qcs = []
 
-    useEffect(() => {
-        const dataFetch = async  () => {
-            const data = await sparqlRequest(sparql_endpoint, query).then(({head, results}) => {
-                return results.bindings
-            })
-
-            let resulatLabel = []
-            Object.keys(data[0]).forEach(label => {
-                resulatLabel.push(<th className={styles["row"]}>{label}</th>)
-            })
-            let resultBindings = []
-            data.forEach(elt => {
-                resultBindings.push(<TextRow element={elt}/>)
-            })
-            setTextRows(resultBindings)
-            setLabelRows(resulatLabel)
-
-        }
-        dataFetch()
-    }, [])
+    qc.forEach(qc_obj => qcs.push(<QcElement question={qc_obj}/>))
 
     return <section className={styles['section-text']}>
-        <table>
-            <thead>
-                <tr>
-                    {labelRows}
-                </tr>
-            </thead>
-            <tbody>
-                {textRows}
-            </tbody>   
-        </table>
-        
+        {qcs}
     </section>
 }
 

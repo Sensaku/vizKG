@@ -1,43 +1,22 @@
 .section-text {
-    border: grey thin solid;
     padding: 5px;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 30px 10px 30px;
     margin-top: 30px;
     box-shadow: 3px 5px 5px rgb(196, 196, 196);
     background-color: white;
-    border-radius: 5px;
 }
 
-.h2-text {
-    color: grey;
+.summary {
+    text-align: left;
 }
 
-.h2-text::after{
-    content: " ";
-    padding-top: 10px;
-    display: block;
-    margin: auto;
-    width: 80%;
-    border-bottom: grey thin solid;
-}
-
-.p-text {
-    display: block;
-    width: 90%;
+.content {
     text-align: justify;
-    padding-left: 10px;
-    margin: 0;
 }
 
-.p-paragraph {
-    display: black;
-    width: 10%;
-    border-right: grey thin solid;
-    margin: 0;
-    vertical-align: center;
-}
+
 
 .row-text-display {
     display: flex;
@@ -45,14 +24,10 @@
     border-bottom: grey thin solid;
 }
 
+.about{
+    text-align: justify;
+}
+
 .row {
     border-bottom: 1px solid #a7a7a7;
-}
-
-tr:nth-child(2n){
-    background-color: rgb(228, 228, 228);
-}
-
-tbody > tr:hover{
-    background-color: rgb(210, 210, 255);
 }

@@ -14,4 +14,48 @@ code {
 
 table{
   border-spacing: 0;
+  width: 100%;
+  box-shadow: 0 5px 5px rgb(196, 196, 196);
 }
+
+summary:hover {
+  background-color: rgb(144, 223, 255);
+  cursor: pointer;
+}
+
+details > p {
+  text-align: left;
+}
+
+thead{
+  background-color: rgb(119, 119, 119);
+  color: white;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+
+thead > tr > th {
+  padding: 5px 0;
+}
+
+
+
+td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+details > summary {
+  list-style: square;
+  margin: 15px 0;
+}
+
+
+tr:nth-child(2n){
+  background-color: rgb(228, 228, 228);
+}
+
+tbody > tr:hover{
+  background-color: rgb(210, 210, 255);
+}
+
