@@ -210,7 +210,7 @@ const qc = [
         }
         ORDER BY ?paragraph`
     },
-    {
+ /*   {
         number: 6,
         question: `Sur le rythme alimentaire des animaux : quels sont les animaux capables de jeûner, quelles sont les informations sur les rythmes de repas (fréquence)?`,
         about: {
@@ -235,7 +235,7 @@ const qc = [
           FILTER (lang(?name_fasting) = "en")
         }
         ORDER BY ?paragraph`
-    },
+    },*/
     {
         number: 7,
         question: `Quelles sont les données transmises sur le temps de gestation des animaux?`,

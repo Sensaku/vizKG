@@ -75,9 +75,15 @@ const TextRow = ({element}) => {
 }
 
 const TextDisplay = () => {
-    const qcs = []
+    const [qcs, setQcs] = useState([])
 
-    qc.forEach(qc_obj => qcs.push(<QcElement question={qc_obj}/>))
+    useEffect(() => {
+        const toGenerate = []
+        qc.forEach(qc_obj => toGenerate.push(<QcElement question={qc_obj}/>))
+        setQcs(toGenerate)
+    },[])
+
+    
 
     return <section className={styles['section-text']}>
         {qcs}
