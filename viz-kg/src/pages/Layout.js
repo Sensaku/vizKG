@@ -1,9 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
+import styles from "./css/Layout.module.css";
 
 const Layout = () => {
   return <>
-      <nav>
-        <ul>
+      <nav className={styles["menu-box"]}>
+        <div>
+            <h2>Viz-KG</h2>
+        </div>
+        <ul className={styles["menu-block"]}>
           <li>
             <Link to="/">Home</Link>
           </li>

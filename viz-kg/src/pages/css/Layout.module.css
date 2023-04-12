@@ -1,0 +1,46 @@
+.menu-box {
+    display: flex;
+    flex-direction: row;
+    border: black thin solid;
+    padding: 20px 0;
+    background-color: rgb(3, 22, 46);
+}
+
+.menu-box > div {
+    width: 20%;
+    text-align: center;
+}
+
+.menu-box > div > h2 {
+    color:white;
+}
+
+.menu-block {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 100%;
+}
+
+.menu-block > li {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    border: grey thin solid;
+    border-radius: 5px;
+    margin: 0 10px;
+    background-color: rgb(62, 141, 209);
+}
+
+.menu-block > li:hover {
+    background-color: cadetblue;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.menu-block > li > a {
+    text-decoration: none;
+    font-weight: bolder;
+    color:white;
+    width: 100%;
+}

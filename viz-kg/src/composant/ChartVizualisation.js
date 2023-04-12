@@ -3,7 +3,7 @@ import styles from "./ChartVizualisation.module.css";
 
 const ChartVizualisation = () => {
 
-    return <div>
+    return <div className={styles["content"]}>
         <h1>This is the graph page!</h1>
     </div>
 }

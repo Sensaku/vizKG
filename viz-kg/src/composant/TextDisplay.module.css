@@ -1,5 +1,5 @@
 .section-text {
-    padding: 5px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     padding: 10px 30px 10px 30px;
@@ -10,13 +10,12 @@
 
 .summary {
     text-align: left;
+    padding: 15px 0;
 }
 
 .content {
     text-align: justify;
 }
-
-
 
 .row-text-display {
     display: flex;
