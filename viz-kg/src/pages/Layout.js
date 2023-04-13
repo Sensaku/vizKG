@@ -9,13 +9,13 @@ const Layout = () => {
         </div>
         <ul className={styles["menu-block"]}>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Accueil</Link>
           </li>
           <li>
             <Link to="/QuestionsCompetences">Question de compétences</Link>
           </li>
           <li>
-            <Link to="/GrapheQuery">Graphe Query</Link>
+            <Link to="/GrapheQuery">Network vizualisation</Link>
           </li>
         </ul>
       </nav>

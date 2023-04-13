@@ -49,6 +49,8 @@ const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters
             let nameEdge = ""
             if (!(row[obj.name] === undefined)){
                 nameEdge = row[obj.name]
+            }else{
+                nameEdge = obj.name
             }
             const edge = {
                 from: row[obj.from].value,

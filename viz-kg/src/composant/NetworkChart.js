@@ -13,7 +13,8 @@ const NetworkChart = ({graph, question}) => {
         },
         edges: {
           arrows: 'to',
-          color: "#000000"
+          color: "#000000",
+          physics: false
         },
         height: "500px",
     });
