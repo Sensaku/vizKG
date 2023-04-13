@@ -1,7 +1,6 @@
 .menu-box {
     display: flex;
     flex-direction: row;
-    border: black thin solid;
     padding: 20px 0;
     background-color: rgb(3, 22, 46);
 }

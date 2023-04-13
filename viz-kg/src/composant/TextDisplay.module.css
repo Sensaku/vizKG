@@ -1,15 +1,13 @@
 .section-text {
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    padding: 10px 30px 10px 30px;
     margin-top: 30px;
     box-shadow: 3px 5px 5px rgb(196, 196, 196);
     background-color: white;
 }
 
 .summary {
-    text-align: left;
+    text-align: center;
     padding: 15px 0;
 }
 
@@ -29,4 +27,19 @@
 
 .row {
     border-bottom: 1px solid #a7a7a7;
+}
+
+.query-row {
+    padding: 15px 15px 15px 30px;
+}
+
+.query-row > h2 {
+    text-align: center;
+    color: white;
+    background-color: rgb(15, 64, 123);
+    padding: 15px;
+}
+
+.query-row:nth-child(2n) {
+    background-color: rgb(237, 237, 237);
 }

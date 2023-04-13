@@ -1,5 +1,6 @@
 .canvas {
-    border : black thin grey;
+    border : grey thin solid;
     margin: auto;
-    box-shadow: 0px 0px 5px grey;
+    box-shadow: 0px 0px 10spx grey;
+    background-color: white;
 }

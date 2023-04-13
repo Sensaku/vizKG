@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef} from 'react';
 import styles from "./css/GrapheQuery.module.css";
 import NetworkChart from '../composant/NetworkChart';
+import qc from '../util_functions/qc_queries';
+import  { sparqlRequest, emptyAboutValue, sparqlConvertNetwork } from '../util_functions/utility';
+import sparql_endpoint from '../util_functions/config';
 
-const DisplaySection = () => {
-    const title = "QC1 : Inférence possible"
-    const about = "Visualisation de l'inférence"
+const DisplaySection = ({question, graph}) => {
+    const title = `QC${question.number} - ${question.question}`
+    const about = `${question.about.description} ${question.about.reformulation} ${question.about.sortie}`
 
     return <section className={styles["query-row"]}>
         <div className={styles["left-about"]}>
@@ -12,14 +15,42 @@ const DisplaySection = () => {
             <p>{about}</p>
         </div>
         <div className={styles["right-canvas"]}>
-            <NetworkChart key={1} graph={{}} options={{}} events={{}}/>
+            <NetworkChart key={`graph_canvas_${question.number}`} graph={graph} question={question}/>
         </div>
     </section>
 }
 
 
 const GrapheQuery = () => {
-    const sectionList = [<DisplaySection key={"section_query_1"} />, <DisplaySection key={"section_query_2"} />];
+    const [sectionList, setSectionList] = useState([]);
+
+    useEffect(() => {
+        const sList = []
+        const dataFetch = async (question) => {
+            const data = await sparqlRequest(sparql_endpoint, question.sparql).then(({head, results}) => {
+                return results.bindings 
+            })
+
+            const g = await sparqlConvertNetwork(
+                data,
+                question.labelViz,
+                question.nodeParameters,
+                question.linkEdge
+            )
+            sList.push(<DisplaySection key={`section_qc_${question.number}`} graph={g} question={question}/>)
+            setSectionList(sList)
+        }
+        qc.forEach((qc_obj) => {
+            dataFetch(qc_obj)
+        })
+        
+
+        /*qc.forEach((qc_object) => {
+            dataFetch(qc_object)
+        })*/
+    }, [])
+
+    
 
     return <div className={styles["content"]}>
         <h1>This is the graph query vizualisation</h1>  

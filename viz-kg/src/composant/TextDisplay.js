@@ -11,14 +11,16 @@ const QcElement = ({question}) => {
     const note = emptyAboutValue(question.about.note)
     const sortie = emptyAboutValue(question.about.sortie)
 
-    return <details>
-        <summary className={styles["summary"]}>QC{question.number} : {question.question}</summary>
+    return <section className={styles["query-row"]}>
         <h2>QC{question.number} : {question.question}</h2>
         {reformulation}
         {note}
         {sortie}
-        <TableRender question={question} />
-    </details>
+        <details>
+            <summary className={styles["summary"]}>Afficher le résultat</summary>
+            <TableRender question={question} />
+        </details>
+    </section>
 }
 
 const TableRender = ({question}) => {

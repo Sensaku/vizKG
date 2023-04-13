@@ -1,16 +1,51 @@
 import React, { useState, useEffect, useRef} from 'react';
-import ReactDom from "react-dom";
 import Graph from 'react-graph-vis';
 import styles from "./NetworkChart.module.css";
 
-const NetworkChart = () => {
-    const [graph, setGraph] = useState({});
-    const [options, setOptions] = useState({});
-    const [events, setEvents] = useState({});
-    const toRender = [];
-  
+
+const NetworkChart = ({graph, question}) => {
+    const [options, setOptions] = useState({
+        layout: {
+          hierarchical: false
+        },
+        nodes:{
+            shape: 'circle'
+        },
+        edges: {
+          arrows: 'to',
+          color: "#000000"
+        },
+        height: "500px",
+    });
+    const [events, setEvents] = useState({
+        select: function(event) {
+          var { nodes, edges } = event;
+        }
+    });
+
+    const  [toRender, setToRender] = useState([]);
     useEffect(() => {
-        const newGraph = {
+        const newGraph = []
+        newGraph.push(<Graph 
+            graph={graph}
+            options={options}
+            events={events}
+            getNetwork={network => {}} />)
+        setToRender(newGraph)
+    },[])
+    
+    return <div key={`div_canvas_${question.number}`} className={styles["canvas"]}>
+        {toRender}
+    </div>
+
+    
+}
+
+export default NetworkChart;
+
+
+/*
+const newGraph = {
             nodes: [
               { id: 1, label: "Node 1", title: "node 1 tootip text" , color: "red"},
               { id: 2, label: "Node 2", title: "node 2 tootip text" },
@@ -25,52 +60,4 @@ const NetworkChart = () => {
               { from: 2, to: 5 }
             ]
         };
-
-        setGraph(newGraph)
-
-        const newOptions = {
-            layout: {
-              hierarchical: false
-            },
-            nodes:{
-                shape: 'circle'
-            },
-            edges: {
-              arrows: 'to',
-              color: "#000000"
-            },
-            height: "500px",
-        };
-
-        setOptions(newOptions)
-
-        const newEvents = {
-            select: function(event) {
-              var { nodes, edges } = event;
-            }
-        };
-
-        setEvents(newEvents)
-
-    },[])
-
-    if(!(Object.keys(graph).length === 0 && graph.constructor === Object)){
-        toRender.push(<Graph 
-            key={1}
-            graph={graph}
-            options={options}
-            events={events}
-            getNetwork={network => {
-    
-            }}
-        />)
-    }
-
-    return <div className={styles["canvas"]}>
-        {toRender}
-    </div>
-
-    
-}
-
-export default NetworkChart;
+        */

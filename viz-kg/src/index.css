@@ -25,7 +25,9 @@ table{
 }
 
 summary:hover {
-  background-color: rgb(144, 223, 255);
+  background-color: rgb(3, 22, 46);
+  color: white;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -35,9 +37,14 @@ details > p {
 
 thead{
   background-color: rgb(119, 119, 119);
-  color: white;
+  color: black;
   font-size: 22px;
   text-transform: capitalize;
+}
+
+tr > th {
+  background-color: rgb(3, 22, 46);
+  color: white;
 }
 
 thead > tr > th {
@@ -52,10 +59,12 @@ td {
 }
 
 details > summary {
-  list-style: square;
   margin: 15px 0;
 }
 
+tr:nth-child(2n + 1){
+  background-color: white;
+}
 
 tr:nth-child(2n){
   background-color: rgb(228, 228, 228);

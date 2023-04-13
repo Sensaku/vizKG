@@ -24,12 +24,21 @@ const qc = [
         ?construction skos:prefLabel ?name_construction;
                             skos:broader+ ?construction_generique.
         ?construction_generique skos:prefLabel "house building"@en.
-        
+
+        FILTER NOT EXISTS {?x  skos:broader ?animal}
         FILTER (lang(?name_animal) = "en")
         FILTER (lang(?name_construction) = "en")
         }
         ORDER BY ?paragraph
-    `
+        `,
+        labelViz : ["name_animal", "name_construction"],
+        linkEdge : [
+            {from: "name_animal", to: "name_construction", name: "construction"}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "name_construction" : "blue"
+        }
     },
     {
         number:2,
@@ -68,13 +77,22 @@ const qc = [
         ?anthro skos:prefLabel ?name_anthro.
         ?anthro_collection skos:prefLabel ?anthro_collection_name;
             skos:member ?anthro.
-        
+
         FILTER (lang(?name_animal) = "en").
         FILTER (lang(?name_relation) = "en")
         FILTER (lang(?name_anthro) = "en")
         FILTER (?anthro_collection_name in ("Place"@en, "Anthroponym"@en))
+        FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal", "name_anthro"],
+        linkEdge : [
+            {from: "name_animal", to: "name_anthro", name: "name_relation"}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "name_anthro" : "blue"
+        }
     },
     {
         number: 3,
@@ -118,8 +136,17 @@ const qc = [
           FILTER (str(?name_conso_generique) = "animal in human nourishing").
           FILTER (lang(?name_animal) = "en").
           FILTER (lang(?name_conso) = "en")
+          FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal", "name_conso"],
+        linkEdge : [
+            {from: "name_animal", to: "name_conso", name: ""}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "name_conso" : "blue"
+        }
     },
     {
         number: 4,
@@ -164,8 +191,14 @@ const qc = [
           FILTER (str(?name_use_generique) = "medical use of animal").
           FILTER (lang(?name_animal) = "en").
           FILTER (lang(?name_use) = "en")
+          FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal"],
+        linkEdge : [],
+        nodeParameters: {
+            "name_animal" : "red",
+        }
     },
     {
         number: 5,
@@ -207,8 +240,17 @@ const qc = [
           FILTER (str(?name_social) = "speech").
           FILTER (lang(?name_animal) = "en").
           FILTER (lang(?name_social) = "en")
+          FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal", "name_social"],
+        linkEdge : [
+            {from: "name_animal", to: "name_social", name: "communique"}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "name_social" : "blue"
+        }
     },
  /*   {
         number: 6,
@@ -276,8 +318,15 @@ const qc = [
           FILTER (lang(?name_pregnancy) = "en")
           FILTER (str(?name_animal_collection) = "Ancient class").
           FILTER (lang(?name_animal) = "en").
+          FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal"],
+        linkEdge : [
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+        }
     },
     {
         number: 8,
@@ -319,51 +368,17 @@ const qc = [
           FILTER (lang(?name_use) = "en")
           FILTER (str(?name_animal_collection) = "Ancient class").
           FILTER (lang(?name_animal) = "en").
+          FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
-        ORDER BY ?paragraph`
-    },
-    {
-        number: 9,
-        question: `Quels sont les objets techniques réalisés avec des parties animales (peau, os, cornes…)?`,
-        about: {
-            reformulation: ``,
-            note: ``,
-            sortie: ``
-        },
-        sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        PREFIX schema:  <http://schema.org/>
-        
-        SELECT DISTINCT ?paragraph ?name_animal ?mention_animal ?mention_use WHERE {
-        ?annotation1 a oa:Annotation;
-                      oa:hasBody ?animal;
-                      oa:hasTarget ?target1.
-          ?target1 oa:hasSource ?paragraph;
-             oa:hasSelector ?selector.
-            
-          ?selector oa:exact ?mention_animal.
-        
-          ?animal a skos:Concept;
-               skos:prefLabel ?name_animal.
-            
-          ?animal_collection a skos:Collection;
-               skos:prefLabel ?name_animal_collection;
-               skos:member ?animal.
-        
-          ?annotation2 oa:hasBody ?use;
-                oa:hasTarget ?target2.
-          ?target2 oa:hasSource ?paragraph;
-              oa:hasSelector ?selector2.
-          ?selector2 oa:exact ?mention_use.
-        
-          ?use skos:prefLabel ?name_use.
-        
-          FILTER (str(?name_use) = "technical use").
-          FILTER (lang(?name_use) = "en")
-          FILTER (str(?name_animal_collection) = "Ancient class").
-          FILTER (lang(?name_animal) = "en").
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal", "mention_use"],
+        linkEdge : [
+            {from: "name_animal", to: "mention_use", name: "utilisation"}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "mention_use" : "blue"
         }
-        ORDER BY ?paragraph`
     }
 
 ]

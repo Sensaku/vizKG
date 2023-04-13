@@ -8,19 +8,27 @@
     flex-direction: row;
 }
 
+.query-row:nth-child(2n) {
+    background-color: rgb(237, 237, 237);
+}
+
 .query-row > div {
     display: block;
     width: 50%;
 }
 
 .left-about {
+    padding: 15px 15px 15px 30px;
+}
+
+.left-about > h3 {
+    background-color: rgb(15, 64, 123);
     padding: 15px;
-    background-color: rgb(220, 220, 220);
-    border-bottom: grey thin solid;
+    color: white;
 }
 
 .left-about > p {
-    text-align: left;
+    text-align: justify;
 }
 
 .right-canvas {
