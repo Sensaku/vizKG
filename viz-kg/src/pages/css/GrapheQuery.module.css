@@ -2,3 +2,27 @@
     background-color: white;
     text-align: center;
 }
+
+.query-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.query-row > div {
+    display: block;
+    width: 50%;
+}
+
+.left-about {
+    padding: 15px;
+    background-color: rgb(220, 220, 220);
+    border-bottom: grey thin solid;
+}
+
+.left-about > p {
+    text-align: left;
+}
+
+.right-canvas {
+    padding: 15px;
+}
