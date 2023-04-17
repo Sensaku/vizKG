@@ -24,7 +24,7 @@ const checkNodeAlreadyInList = (nodesArray, val) => {
     return false;
 }
 
-const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters, edgesDirection) => {
+const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters, edgesDirection, constraintObject=[]) => {
     const graph = { nodes : [], edges : []}
     const nodes = [];
     const edges = [];
@@ -34,11 +34,30 @@ const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters
     resultBindings.forEach(row => {
         labelToBind.forEach(variable => {
             if(!(checkNodeAlreadyInList(nodes, row[variable].value))){
+
+                let color = nodesParameters[variable]
+
+                constraintObject.forEach(obj => {
+                    console.log(obj)
+                    if((obj.variable.label === variable) && (obj.variable.constraintStr === row[obj.variable.variableConstraint].value)){
+                        color = obj.variable.color
+                    }
+                })
+                
                 const node = {
                     id: row[variable].value,
                     label:row[variable].value,
                     title:row[variable].value,
-                    color: nodesParameters[variable]
+                    color: {
+                        background: color,
+                        hover : "#40E44D",
+                        hightlight: "#40E44D"
+                    },
+                    font : {
+                        color: "#ffffff",
+                        size : 22,
+                        bold: true
+                    }
                 }
                 nodes.push(node)
             }
@@ -48,7 +67,7 @@ const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters
         edgesDirection.forEach(obj => {
             let nameEdge = ""
             if (!(row[obj.name] === undefined)){
-                nameEdge = row[obj.name]
+                nameEdge = row[obj.name].value
             }else{
                 nameEdge = obj.name
             }

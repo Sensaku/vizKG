@@ -9,12 +9,16 @@ const NetworkChart = ({graph, question}) => {
           hierarchical: false
         },
         nodes:{
-            shape: 'circle'
+            shape: 'ellipse',
+            widthConstraint : true,
         },
         edges: {
           arrows: 'to',
           color: "#000000",
-          physics: false
+          smooth: true,
+          font : {
+            size: 24
+          }
         },
         height: "500px",
     });

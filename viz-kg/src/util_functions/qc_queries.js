@@ -53,7 +53,7 @@ const qc = [
         PREFIX schema:  <http://schema.org/>
         PREFIX paragraph: <http://www.zoomathia.com/>
         
-        SELECT DISTINCT ?paragraph ?name_animal ?name_relation ?name_anthro WHERE {
+        SELECT DISTINCT ?paragraph ?name_animal ?name_relation ?name_anthro ?anthro_collection_name WHERE {
         ?annotation1 oa:hasBody ?animal; oa:hasTarget [ oa:hasSource ?paragraph; oa:hasSelector [oa:exact ?mention_animal]].
         ?annotation2 oa:hasBody ?relation; oa:hasTarget [ oa:hasSource ?paragraph; oa:hasSelector [oa:exact ?mention_relation]].
         
@@ -92,7 +92,83 @@ const qc = [
         nodeParameters: {
             "name_animal" : "red",
             "name_anthro" : "blue"
+        },
+        nodesConstraint : [
+            {
+                variable : {
+                    label : "name_anthro",
+                    variableConstraint: "anthro_collection_name",
+                    constraintStr: "Place",
+                    color : "purple"
+                }
+            }
+        ]
+    },
+    {
+        number:"2_bis",
+        question: "Quelles anecdotes mettant en relation un homme et un animal (pas toutes les relations hommes/animaux, comme la chasse, etc., mais seulement les situations individuelles, qui seront probablement marquées par un nom propre, ou un nom de lieu, etc.)",
+        about: {
+            reformulation:`Reformulation: Les annotation mentionnant une anecdote, une relation homme/animal faisant parti du même paragraphe.`,
+            note:"Note: Je me suis restreint à des relations spéciales (prédation, enmity, friendship)",
+            sortie: ""
+        },
+        sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX schema:  <http://schema.org/>
+        PREFIX paragraph: <http://www.zoomathia.com/>
+        
+        SELECT DISTINCT ?paragraph ?name_animal ?name_relation ?name_anthro ?anthro_collection_name WHERE {
+        ?annotation1 oa:hasBody ?animal; oa:hasTarget [ oa:hasSource ?paragraph; oa:hasSelector [oa:exact ?mention_animal]].
+        ?annotation2 oa:hasBody ?relation; oa:hasTarget [ oa:hasSource ?paragraph; oa:hasSelector [oa:exact ?mention_relation]].
+        
+        ?annotation3 oa:hasBody ?anthro;
+                oa:hasTarget ?target3.
+        ?target3 oa:hasSource ?paragraph;
+            oa:hasSelector ?selector3.
+        ?selector3 oa:exact ?mention_anthro.
+        
+        ?animal a skos:Concept;
+            skos:prefLabel ?name_animal.
+            
+        ?animal_collection a skos:Collection;
+            skos:prefLabel "Ancient class"@en;
+            skos:member ?animal.
+        
+        ?relation skos:prefLabel ?name_relation;
+                            skos:broader+ ?relation_generique.
+        ?relation_generique skos:prefLabel  "special relationship"@en.
+        
+        ?anthro skos:prefLabel ?name_anthro.
+        ?anthro_collection skos:prefLabel ?anthro_collection_name;
+            skos:member ?anthro.
+
+        FILTER (lang(?name_animal) = "en").
+        FILTER (lang(?name_relation) = "en")
+        FILTER (lang(?name_anthro) = "en")
+        FILTER (?anthro_collection_name in ("Place"@en, "Anthroponym"@en))
+        FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
+        ORDER BY ?paragraph`,
+        labelViz : ["name_animal", "name_anthro", "name_relation"],
+        linkEdge : [
+            {from: "name_animal", to: "name_anthro", name: ""},
+            {from: "name_animal", to: "name_relation", name: ""}
+        ],
+        nodeParameters: {
+            "name_animal" : "red",
+            "name_anthro" : "blue",
+            "name_relation" : "green"
+        },
+        nodesConstraint : [
+            {
+                variable : {
+                    label : "name_anthro",
+                    variableConstraint: "anthro_collection_name",
+                    constraintStr: "Place",
+                    color : "purple"
+                }
+            }
+        ]
     },
     {
         number: 3,
@@ -139,9 +215,9 @@ const qc = [
           FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
         ORDER BY ?paragraph`,
-        labelViz : ["name_animal", "name_conso"],
+        labelViz : ["name_animal"],
         linkEdge : [
-            {from: "name_animal", to: "name_conso", name: ""}
+            //{from: "name_animal", to: "name_conso", name: ""}
         ],
         nodeParameters: {
             "name_animal" : "red",
@@ -160,7 +236,7 @@ const qc = [
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX schema:  <http://schema.org/>
         
-        SELECT DISTINCT ?paragraph ?name_animal ?mention1 ?mention2 WHERE {
+        SELECT DISTINCT ?paragraph ?name_animal ?mention1 ?name_use ?mention2 WHERE {
           ?annotation1 a oa:Annotation;
                       oa:hasBody ?animal;
                       oa:hasTarget ?target1.
@@ -194,10 +270,13 @@ const qc = [
           FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
         ORDER BY ?paragraph`,
-        labelViz : ["name_animal"],
-        linkEdge : [],
+        labelViz : ["name_animal", "name_use"],
+        linkEdge : [
+            {from: "name_animal", to: "name_use", name:"utilisation"}
+        ],
         nodeParameters: {
             "name_animal" : "red",
+            "name_use" : "blue"
         }
     },
     {
@@ -243,9 +322,9 @@ const qc = [
           FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
         ORDER BY ?paragraph`,
-        labelViz : ["name_animal", "name_social"],
+        labelViz : ["name_animal"],
         linkEdge : [
-            {from: "name_animal", to: "name_social", name: "communique"}
+            //{from: "name_animal", to: "name_social", name: "communique"}
         ],
         nodeParameters: {
             "name_animal" : "red",
@@ -340,7 +419,7 @@ const qc = [
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX schema:  <http://schema.org/>
         
-        SELECT DISTINCT ?paragraph ?name_animal ?mention_animal ?mention_use WHERE {
+        SELECT DISTINCT ?paragraph ?name_animal ?mention_animal ?name_use ?mention_use WHERE {
         ?annotation1 a oa:Annotation;
                       oa:hasBody ?animal;
                       oa:hasTarget ?target1.
@@ -371,13 +450,13 @@ const qc = [
           FILTER NOT EXISTS {?x  skos:broader ?animal}
         }
         ORDER BY ?paragraph`,
-        labelViz : ["name_animal", "mention_use"],
+        labelViz : ["name_animal", "name_use"],
         linkEdge : [
-            {from: "name_animal", to: "mention_use", name: "utilisation"}
+            {from: "name_animal", to: "name_use", name: "utilisation"}
         ],
         nodeParameters: {
             "name_animal" : "red",
-            "mention_use" : "blue"
+            "name_use" : "blue"
         }
     }
 

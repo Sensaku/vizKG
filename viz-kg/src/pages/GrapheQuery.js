@@ -31,11 +31,17 @@ const GrapheQuery = () => {
                 return results.bindings 
             })
 
+            let constraintTable = []
+            if ("nodesConstraint" in question) {
+                constraintTable = question.nodesConstraint
+            }
+
             const g = await sparqlConvertNetwork(
                 data,
                 question.labelViz,
                 question.nodeParameters,
-                question.linkEdge
+                question.linkEdge,
+                constraintTable
             )
             sList.push(<DisplaySection key={`section_qc_${question.number}`} graph={g} question={question}/>)
             setSectionList(sList)
