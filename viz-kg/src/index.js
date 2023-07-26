@@ -8,6 +8,7 @@ import QuestionsCompetences from "./pages/QuestionsCompetences";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPages";
+import BookDisplay from './pages/BookDisplay';
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="QuestionsCompetences" element={<QuestionsCompetences />}/>
-          <Route path="GrapheQuery" element={<GrapheQuery />}/> 
+          <Route path="GrapheQuery" element={<GrapheQuery />}/>
+          <Route path="BookDisplay" element={<BookDisplay />}/> 
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

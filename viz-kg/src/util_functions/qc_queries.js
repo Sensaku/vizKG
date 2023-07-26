@@ -10,7 +10,7 @@ const qc = [
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX schema:  <http://schema.org/>
-    SELECT DISTINCT ?paragraph ?name_animal ?mention_animal ?name_construction ?mention_construction WHERE {
+    SELECT DISTINCT ?paragraph ?text ?name_animal ?mention_animal ?name_construction ?mention_construction WHERE {
         ?annotation1 oa:hasBody ?animal ; oa:hasTarget [ oa:hasSource ?paragraph; oa:hasSelector [ oa:exact ?mention_animal]].
         ?animal skos:prefLabel ?name_animal.
         ?animal_collection a skos:Collection;
@@ -20,6 +20,7 @@ const qc = [
         ?annotation2 oa:hasBody ?construction;
                 oa:hasTarget [oa:hasSource ?paragraph;
                     oa:hasSelector [oa:exact ?mention_construction]].
+        ?paragraph schema:text ?text.
         
         ?construction skos:prefLabel ?name_construction;
                             skos:broader+ ?construction_generique.

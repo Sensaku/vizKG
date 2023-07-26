@@ -17,6 +17,9 @@ const Layout = () => {
           <li>
             <Link to="/GrapheQuery">Network vizualisation</Link>
           </li>
+          <li>
+            <Link to="/BookDisplay">Book Display</Link>
+          </li>
         </ul>
       </nav>
 
