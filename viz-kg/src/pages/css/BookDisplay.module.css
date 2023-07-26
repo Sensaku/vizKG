@@ -1,0 +1,26 @@
+p {
+    margin: 0;
+    text-align: justify;
+}
+
+.paragraph-block {
+    display : flex;
+    width : 70%;
+    margin: auto;
+    background-color: white;
+
+}
+
+.paragraph-number {
+    padding: 10px;
+    display: flex;
+    max-width: 10%;
+    min-width: 10%;
+    justify-content: center;
+    border-right: grey thin solid;
+}
+
+.paragraph-text {
+    display: flex;
+    padding: 10px;
+}
