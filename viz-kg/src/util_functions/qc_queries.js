@@ -1,11 +1,13 @@
 const qc = [
     {
         number: 1,
-        question: "Quels sont les animaux qui construisent un habitat (textes où l’on parle de cette construction)",
+        question: "Quels sont les animaux qui construisent un habitat ?",
         about: {
+            objectif : `Cette question exprime le besoin du chercheur à cibler les passages dans le texte où l'auteur mentionne un animal et la construction d'un habitat.`,
             reformulation: `Reformulation: Les annotations qui mentionnent un animal et une construction d'habitation étant dans le même paragraphe.`,
-            note: `Note: généralisation de l'animal faisant parti de la collection "Archéotaxon" ("Ancient class" en anglais)`,
-            sortie: "Sortie: Le paragraphe, l'animal (concept), le texte mentionnant l'animal, la construction (concept), le texte mentionnant la construction"
+            restriction : `Pour restreindre les résultats et apporté de la cohérence entre les deux concepts, l'apparition des deux concepts mentionnés plus haut doivent faire partie du même paragraphe.`,
+            note: `Note: généralisation de l'animal faisant parti de la collection "Archéotaxon" ("Ancient class" en anglais).`,
+            sortie: "Sortie: Le paragraphe, l'animal (concept), le texte mentionnant l'animal, la construction (concept), le texte mentionnant la construction."
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -34,7 +36,7 @@ const qc = [
         `,
         labelViz : ["name_animal", "name_construction"],
         linkEdge : [
-            {from: "name_animal", to: "name_construction", name: "construction"}
+            {from: "name_animal", to: "name_construction", name: ""}
         ],
         nodeParameters: {
             "name_animal" : "red",
@@ -43,11 +45,13 @@ const qc = [
     },
     {
         number:2,
-        question: "Quelles anecdotes mettant en relation un homme et un animal (pas toutes les relations hommes/animaux, comme la chasse, etc., mais seulement les situations individuelles, qui seront probablement marquées par un nom propre, ou un nom de lieu, etc.)",
+        question: "Quelles anecdotes mettent en relation un homme et un animal ?",
         about: {
-            reformulation:`Reformulation: Les annotation mentionnant une anecdote, une relation homme/animal faisant parti du même paragraphe.`,
-            note:"Note: Je me suis restreint à des relations spéciales (prédation, enmity, friendship)",
-            sortie: ""
+            objectif : `Cette question exprime le besoin du chercheur à cibler les passages dans le texte où l'auteur mentionne une relation entre un animal et l'homme. Cette relation est décrite au travers d'une anecdote. Les relations comme la chasse et autres ne sont pas attendu. Uniquement les situations individuelles.`,
+            reformulation:`La reformulation de la requête SPARQL est très complexe. Pour étudier les possibilités offertes, la requête sera décomposé en plusieurs requêtes portant sur différent concept.`,
+            restriction : `Pour restreindre les résultats et apporté de la cohérence entre les deux concepts, l'apparition des concepts mentionnés plus haut doivent faire partie du même paragraphe.`,
+            note: "Une anecdote est un concept très difficile à caractériser. La définition proposée est la suivante: une anecdote est un évènemment unique, daté mettant en relation un antroponyme et un animal dans un lieu précisé. Toutes ces informations peuvent ne pas apparaitre dans le texte. De plus, il est possible que lors de l'annotation, le concept d'anecdote n'ait pas été renseigné.",
+            sortie: "L'anecdote, l'animal, l'homme, la relation homme animal, le lieu et la date."
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -107,11 +111,13 @@ const qc = [
     },
     {
         number:"2_bis",
-        question: "Quelles anecdotes mettant en relation un homme et un animal (pas toutes les relations hommes/animaux, comme la chasse, etc., mais seulement les situations individuelles, qui seront probablement marquées par un nom propre, ou un nom de lieu, etc.)",
+        question: "Quelles anecdotes mettent en relation un homme et un animal (Uniquement les proximité anecdote et animal dans le paragraphe)?",
         about: {
-            reformulation:`Reformulation: Les annotation mentionnant une anecdote, une relation homme/animal faisant parti du même paragraphe.`,
+            objectif : `Cette question exprime le besoin du chercheur à cibler les passages dans le texte où l'auteur mentionne une relation entre un animal et l'homme. Cette relation est décrite au travers d'une anecdote. Les relations comme la chasse et autres ne sont pas attendu. Uniquement les situations individuelles.`,
+            reformulation:`Reformulation: Les annotation mentionnant une anecdote, une relation homme/animal et un animal faisant parti du même paragraphe.`,
+            restriction : `Pour restreindre les résultats et apporté de la cohérence entre les deux concepts, l'apparition des concepts mentionnés plus haut doivent faire partie du même paragraphe.`,
             note:"Note: Je me suis restreint à des relations spéciales (prédation, enmity, friendship)",
-            sortie: ""
+            sortie: "L'anecdote, l'animal et la relation homme/animal."
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -175,9 +181,12 @@ const qc = [
         number: 3,
         question: "Quels sont les oiseaux qui sont consommés (gastronomie)",
         about: {
-            reformulation: "Reformulation: Les annotations mentionnant un oiseau et une gastronomie faisant parti du même paragraphe",
-            note: "Note: L'insertion d'une collection Oiseau serait intéressante.",
-            sortie: ""
+            objectif : `Cette question exprime le besoin des chercheurs à identifier les passages dans le texte où il est question des espèces d'oiseaux qui sont utilisées dans la gastronomie.`,
+            reformulation: `cette question s'exprime très facilement en SPARQL et revient à chercher : (1) une annotation ayant un concept animal descendant du concept oiseau et (2) un concept descendant du concept "animaux dans la nourriture humaine".`,
+            restriction : `La mention du concept de gastronomie et la mention du concept animal doivent faire partie du même paragraphe.`,
+            note: `Le concept générique "Oiseau" ne couvrent pas l'ensemble des concepts d'oiseau du thésaurus. D'autre hierarchie existe pour qualifier certaines espèces d'oiseau (oiseau palmipède, oiseau avec griffe etc). Par conséquent, il faut prendre en compte tous ces concepts dans la recherche. Une solution possible pour "corriger" ce problème est de reconsidérer la place du concept "OISEAU" dans la hiérarchie sachant que les autres sont, en soit, généralisable comme étant des oiseaux.
+            L'absence de résultat entre les deux versions de ZooKG s'explique par l'absence du concept "cooking" ignoré lors de la génération car étant ambiguë (55 occurences). Cette ambiguité a été réglé dans la nouvelle version du thésaurus.`,
+            sortie: "Les oiseaux consommés"
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -227,11 +236,14 @@ const qc = [
     },
     {
         number: 4,
-        question: `Quels sont les remèdes (thérapeutiques) qui incluent une langue animale (ou un morceau de langue)?`,
+        question: `Quels sont les usages thérapeutiques des parties d'animaux ?`,
         about: {
-            reformulation: `Reformulation: Les annotations qui mentionnent un remède , une langue et un animal faisant parti du même paragraphe`,
-            note: `Note: Difficile de trouver le concept "remède thérapeutique" ou "remède". Dans la hiérarchie, il existe remède vétérinaire (erreur dans l'accent utilisé dans le thésaurus). https://opentheso.huma-num.fr/opentheso/?idc=105552&idt=th310 Tentative d'utilisation "medical use of animal", "medical use of animal parts". Résultat basé sur le concept générique "medical use of animal" et inclue tous les descendant.`,
-            sortie: ``
+            objectif : `Cette question est dérivé de la question originelle "Quels sont les remèdes (thérapeutiques) qui incluent une langue animale (ou un morceau de langue)?" qui ne pouvait être exprimer en SPARQL à cause de l'absence d'annotation relatif aux remèdes et l'absence du concept même dans le thesaurus. Ce concept sera ajouté lors de l'annotation des livres 28 à 30 qui traitent des remèdes et utilisation médicale des animaux.`,
+            reformulation: `Cette question s'exprime en SPARQL en recherchant : (1) un concept animal et (2) un concept descendant du concept "utilisation médical de l'animal".`,
+            restriction : `La mention de l'animal et du concept de l'utilisation animal doivent faire partie du même paragraphe.`,
+            note: `Note: Difficile de trouver le concept "remède thérapeutique" ou "remède". Dans la hiérarchie, il existe remède vétérinaire (erreur dans l'accent utilisé dans le thésaurus). https://opentheso.huma-num.fr/opentheso/?idc=105552&idt=th310 Tentative d'utilisation "medical use of animal", "medical use of animal parts". Résultat basé sur le concept générique "medical use of animal" et inclue tous les descendant.
+            La partie animal n'est pas précisé.`,
+            sortie: `L'animal et le concept d'utilisation de cette animal`
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -273,7 +285,7 @@ const qc = [
         ORDER BY ?paragraph`,
         labelViz : ["name_animal", "name_use"],
         linkEdge : [
-            {from: "name_animal", to: "name_use", name:"utilisation"}
+            {from: "name_animal", to: "name_use", name:""}
         ],
         nodeParameters: {
             "name_animal" : "red",
@@ -282,11 +294,13 @@ const qc = [
     },
     {
         number: 5,
-        question: `Quels sont les animaux qui communiquent entre eux (textes où il est question de mode de communication, de langage, etc.)?`,
+        question: `Quels sont les animaux qui communiquent entre eux ?`,
         about: {
-            reformulation: `Remarque: Pas de concept spécifique qui représente ce comportement dans "comportement social". Le Concept le plus proche de communication est "Parole". Possibilité de chercher comportement social général et parole au sein d'un même paragraphe (Pas de résultat).`,
-            note: `Solution: On se concentre uniquement sur le concept de parole. Ce qui inclue les mimiques, la compréhension de la parole humaine, etc...`,
-            sortie: ``
+            objectif:`Cette requête exprime le besoin des chercheurs à identifier les animaux capables de communiquer au sein de la même espèces.`,
+            reformulation: `Pour représenter cette question en SPARQL, nous cherchons les paragraphes qui mentionnent : (1) un concept d'animal et (2) un concept de parole ou "capacité linguistique".`,
+            restriction: `La mention de l'animal et de la communication doivent faire partie du même paragraphe.`,
+            note: `Ce sont bien des communications intra-espèce et non inter-espèce qui intéresse le chercheur dans ce cas-ci. Le concept "capacité linguistique" est trop générique et inclu les espèces qui sont capables de reproduire des sonorités humaines. Cela de veut pas dire que ces espèces communiquent.`,
+            sortie: `Les animaux qui communiquent entre eux.`
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -332,13 +346,15 @@ const qc = [
             "name_social" : "blue"
         }
     },
- /*   {
+    {
         number: 6,
-        question: `Sur le rythme alimentaire des animaux : quels sont les animaux capables de jeûner, quelles sont les informations sur les rythmes de repas (fréquence)?`,
+        question: `Quels sont les animaux capables de jeûner, quelles sont les informations sur les rythmes de repas (fréquence)?`,
         about: {
-            reformulation: `Reformulation: une annotation mentionnant un animal et une annotation mentionnant le jeune dans le même paragraphe.`,
-            note: `Note: Jeûne en anglais se dit "Fast" ou "Fasting". Peut être renommer le concept en Fasting pour éviter toutes confusion. (se trouve dans vie quotidienne)`,
-            sortie: ``
+            objectif : `L'intention derrière cette requête est d'étudier le rythme alimentaire des animaux.`,
+            reformulation: `Pour représenter cette question en SPARQL, nous cherchons les paragraphes qui mentionnent : (1) un concept d'animal et (2) le concept de jeûne (fasting).`,
+            restriction : `L'animal, la mention du jeûne et le rythme des repas doivent faire partie du même paragraphe.`,
+            note: `Aucune mention du concept "fasting" n'est présente dans les annotations. Par conséquent, cette requête n'a pas de résultat. Il se trouve que le concept "special diet" a été utilisé dans les annotations manuelles mais n'a pas de correspondance dans le thésaurus TheZoo. Il est peut-être nécessaire de modifier cette annotation.`,
+            sortie: `Le paragraphe et l'animal qui jeûne.`
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -357,14 +373,16 @@ const qc = [
           FILTER (lang(?name_fasting) = "en")
         }
         ORDER BY ?paragraph`
-    },*/
+    },
     {
         number: 7,
         question: `Quelles sont les données transmises sur le temps de gestation des animaux?`,
         about: {
-            reformulation: `Remarque: Il n'existe pas de concept représentant la "valeur" du temps de gestion. Voir ce qu'on peut faire (une collection de valeur ?)`,
-            note: ``,
-            sortie: ``
+            objectif : `L'intention du chercheur derrière cette requête est de synthétiser les connaissances sur la gestation des animaux se trouvant dans la littérature antique.`,
+            reformulation: `Pour représenter cette question en SPARQL, nous cherchons les paragraphes qui mentionnent : (1) un concept d'animal et (2) le concept "length of pregnancy".`,
+            restriction : `La mention de la gestation et de l'animal doivent faire partie du même paragraphe.`,
+            note: `Il n'existe pas de concept représentant la "valeur" du temps de gestion. Voir ce qu'on peut faire (une collection de valeur ?)`,
+            sortie: `Les paragraphes et l'animal`
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -412,9 +430,11 @@ const qc = [
         number: 8,
         question: `Quelles sont les expérimentations faites sur les animaux (contexte, description…)?`,
         about: {
-            reformulation: `Remarque: Pas de concept expérimentations. On peut éventuellement se trouver dans le cadre d'une "utilisation de l'animal", cependant il n'y a pas de concept expriment l'utilisation pour la science ou autre. Peut être que ça rentre dans "l'utilisation médical" ou "technique" ?`,
-            note: ``,
-            sortie: ``
+            objectif : `L'intention derrière cette requête est de cibler les textes où une éxpérimentation sur les animaux est décrite et de dégager la ou les tendances expérimentales de l'époque.`,
+            reformulation: `L'expression de cette requête en SPARQL revient à trouver les annotations qui mentionnent (1) un animal et (2) un concept d'expérimentation.`,
+            restriction : `Le concept d'expérimentation, l'animal et la description doivent faire partie du même paragraphe.`,
+            note: `Pas de concept expérimentations. On peut éventuellement se trouver dans le cadre d'une "utilisation de l'animal", cependant il n'y a pas de concept expriment l'utilisation pour la science ou autre. Peut être que ça rentre dans "l'utilisation médical" ou "technique" ?`,
+            sortie: `Le paragraphe, l'animal et l'expérimentation.`
         },
         sparql: `PREFIX oa:     <http://www.w3.org/ns/oa#>
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -453,7 +473,7 @@ const qc = [
         ORDER BY ?paragraph`,
         labelViz : ["name_animal", "name_use"],
         linkEdge : [
-            {from: "name_animal", to: "name_use", name: "utilisation"}
+            {from: "name_animal", to: "name_use", name: ""}
         ],
         nodeParameters: {
             "name_animal" : "red",

@@ -60,13 +60,13 @@ const AnnotationBlock = ({annotation_paragraph}) => {
 
 const ParagraphBlock = ({p_number, p_text, p_url}) => {
     return <div id={p_number} key={p_number} className={styles["paragraph-block"]}>
-        <div>
+        <div class={styles["paragraph-id"]}>
             <p className={styles["paragraph-number"]}>{p_number}</p>
         </div>
-        <div>
+        <div class={styles["paragraph-content"]}>
             <p className={styles["paragraph-text"]}>{p_text}</p>
         </div>
-        <div>
+        <div class={styles["paragraph-concept"]}>
             <ul>
                 <AnnotationBlock key={p_url} annotation_paragraph={p_url} />
             </ul>
@@ -97,7 +97,7 @@ const BookDisplay = () => {
         dataFetch(text_query)
     })
 
-    return <section>
+    return <section id="book-section">
         <h2>Historia Naturalis - Livre 8</h2>
         {paragraphList}
     </section>

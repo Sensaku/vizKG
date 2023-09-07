@@ -1,7 +1,6 @@
 .section-text {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
     box-shadow: 3px 5px 5px rgb(196, 196, 196);
     background-color: white;
 }
@@ -31,6 +30,13 @@
 
 .query-row {
     padding: 15px 15px 15px 30px;
+}
+
+.query-row > p {
+    font-size: 1.3rem;
+    text-align: justify;
+    margin-bottom: 15px;
+    padding : 0 3rem;
 }
 
 .query-row > h2 {

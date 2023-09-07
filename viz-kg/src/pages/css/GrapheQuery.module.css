@@ -23,12 +23,15 @@
 
 .left-about > h3 {
     background-color: rgb(15, 64, 123);
+    font-size: 1.5rem;
     padding: 15px;
     color: white;
 }
 
 .left-about > p {
+    font-size: 1.3rem;
     text-align: justify;
+    margin-bottom: 15px;
 }
 
 .right-canvas {

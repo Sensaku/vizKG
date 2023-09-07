@@ -1,21 +1,26 @@
 import React, { useState, useEffect} from 'react';
 import styles from "./TextDisplay.module.css";
-import  { sparqlRequest, emptyAboutValue } from '../util_functions/utility';
+import  { sparqlRequest } from '../util_functions/utility';
 import qc from '../util_functions/qc_queries';
 import sparql_endpoint from '../util_functions/config';
 
 let i = 0;
 
 const QcElement = ({question}) => {
-    const reformulation = emptyAboutValue(question.about.reformulation)
-    const note = emptyAboutValue(question.about.note)
-    const sortie = emptyAboutValue(question.about.sortie)
+    const title = `QC${question.number} - ${question.question}`
+    const objectif = `${question.about.objectif}`
+    const reformulation = `${question.about.reformulation}`
+    const restriction = `${question.about.restriction}`
+    const note =  `${question.about.note}`
+    const sortie = ` ${question.about.sortie}`
 
     return <section className={styles["query-row"]}>
-        <h2>QC{question.number} : {question.question}</h2>
-        {reformulation}
-        {note}
-        {sortie}
+        <h2>{title}</h2>
+        <p><b><u>Objectif</u></b> : {objectif}</p>
+        <p><b><u>Reformulation</u></b> : {reformulation}</p>
+        <p><b><u>Restriction</u></b> : {restriction}</p>
+        <p><b><u>Note</u></b> : {note}</p>
+        <p><b><u>Sortie</u></b> : {sortie}</p>
         <details>
             <summary className={styles["summary"]}>Afficher le résultat</summary>
             <TableRender question={question} />
@@ -88,6 +93,7 @@ const TextDisplay = () => {
     
 
     return <section className={styles['section-text']}>
+    <h1>Module SPARQL result to Table vizualisation</h1>
         {qcs}
     </section>
 }

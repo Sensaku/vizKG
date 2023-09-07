@@ -9,6 +9,13 @@ body {
 }
 
 
+h1 {
+  margin: 0;
+  padding: 0.67em 0;
+  text-align: center;
+}
+
+
 #root {
   width: 100%;
 }

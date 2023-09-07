@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import GrapheQuery from "./pages/GrapheQuery";
 import QuestionsCompetences from "./pages/QuestionsCompetences";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPages";
 import BookDisplay from './pages/BookDisplay';
+import GraphModule from './pages/GrapheQuery';
 
 export default function App() {
   return (
@@ -17,7 +17,7 @@ export default function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="QuestionsCompetences" element={<QuestionsCompetences />}/>
-          <Route path="GrapheQuery" element={<GrapheQuery />}/>
+          <Route path="GrapheQuery" element={<GraphModule />}/>
           <Route path="BookDisplay" element={<BookDisplay />}/> 
           <Route path="*" element={<NoPage />} />
         </Route>

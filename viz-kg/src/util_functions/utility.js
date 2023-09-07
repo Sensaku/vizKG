@@ -38,7 +38,6 @@ const sparqlConvertNetwork = async (resultBindings, labelToBind, nodesParameters
                 let color = nodesParameters[variable]
 
                 constraintObject.forEach(obj => {
-                    console.log(obj)
                     if((obj.variable.label === variable) && (obj.variable.constraintStr === row[obj.variable.variableConstraint].value)){
                         color = obj.variable.color
                     }
