@@ -64,7 +64,7 @@ const ParagraphBlock = ({p_number, p_text, p_url}) => {
             <p className={styles["paragraph-number"]}>{p_number}</p>
         </div>
         <div class={styles["paragraph-content"]}>
-            <p className={styles["paragraph-text"]}>{p_text}</p>
+            <p className={styles["paragraph-text"]}>{p_text.replaceAll("%22",'"')}</p>
         </div>
         <div class={styles["paragraph-concept"]}>
             <ul>
